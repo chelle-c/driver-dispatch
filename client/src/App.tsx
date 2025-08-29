@@ -1,22 +1,11 @@
-import { useEffect } from "react"
-import { useAppDispatch } from "./app/hooks"
 import Map from "./components/map/Map"
 import Drivers from "./components/drivers/Drivers"
 import DriverFilter from "./components/drivers/DriverFilter"
-import WebSocketComponent from "./components/serverComponent/WebSocketComponent"
+import SocketComponent from "./components/serverComponent/SocketComponent"
 import { AppShell } from "@mantine/core"
 import "./App.css"
 
 export const App = () => {
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch({ type: "socket/connect" })
-    return () => {
-      dispatch({ type: "socket/disconnect" })
-    }
-  }, [dispatch])
-
   return (
     <div className="App">
       <AppShell
@@ -34,7 +23,7 @@ export const App = () => {
           <Map />
         </AppShell.Main>
         <AppShell.Footer>
-          <WebSocketComponent />
+          <SocketComponent />
         </AppShell.Footer>
       </AppShell>
     </div>
