@@ -1,0 +1,28 @@
+.driversContainer {
+  padding: 1em;
+  width: 100%;
+  /* Prevent text highlighting */
+  user-select: none;
+}
+
+.driverContainer {
+  background-color: white;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid rgba(122, 122, 122, 0.3);
+  box-shadow: 0 2px 8px rgba(122, 122, 122, 0.2);
+}
+
+.driverCard {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 1em;
+  width: 100%;
+  cursor: pointer;
+}
+
+.filterSelectSection {
+  width: 3em !important;
+  margin: 1em;
+}
