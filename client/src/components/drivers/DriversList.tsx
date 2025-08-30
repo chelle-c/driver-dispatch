@@ -1,12 +1,9 @@
-import { createRef } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import {
   selectFilteredDrivers,
   setCurrentDriver,
 } from "./driversSlice"
 import type { Driver, Drivers } from "./driversSlice"
-import { setCenter } from "../map/mapSlice"
-
 import {
   Avatar,
   Flex,
@@ -27,7 +24,6 @@ export const DriverDetails: React.FC<DriversProps> = ({
   driver,
   handleSelectedDriver,
 }) => {
-  const ref = createRef<HTMLButtonElement>();
 
   const indicatorColour =
     driver.deliveryStatus === "Delivering"
@@ -38,7 +34,6 @@ export const DriverDetails: React.FC<DriversProps> = ({
 
   return (
     <UnstyledButton
-      ref={ref}
       style={{
         background: "white",
         cursor: "pointer",
@@ -50,7 +45,7 @@ export const DriverDetails: React.FC<DriversProps> = ({
         userSelect: "none",
         marginBottom: "0.3em",
       }}
-      className={styles.driverCard}
+      className={`${styles.driverCard} driver-card`}
       p="xs"
       onClick={() => handleSelectedDriver(driver)}
     >
@@ -89,12 +84,11 @@ const Drivers = () => {
   const filteredDrivers = useAppSelector(selectFilteredDrivers)
 
   const handleSelectedDriver = (driver: Driver) => {
-    dispatch(setCenter(driver.location))
     dispatch(setCurrentDriver(driver))
   }
 
   return (
-    <>
+    <div id="drivers-list">
       {filteredDrivers.length > 0 ? (
         <Flex
           direction="column"
@@ -122,7 +116,7 @@ const Drivers = () => {
           No drivers found.
         </Flex>
       )}
-    </>
+    </div>
   )
 }
 

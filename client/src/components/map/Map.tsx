@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react"
 import { useAppSelector, useAppDispatch } from "../../app/hooks"
-import { selectCenter } from "./mapSlice"
+import { selectCenter, setCenter } from "./mapSlice"
 import {
   selectFilteredDrivers,
   setCurrentDriver,
+  selectCurrentDriver,
 } from "../drivers/driversSlice"
 import type { Driver } from "../drivers/driversSlice"
 import { MapContainer, TileLayer, ZoomControl, useMap } from "react-leaflet"
@@ -20,20 +21,23 @@ const CustomMarker = (driver: Driver) => {
   const markerRef = useRef<Marker<any> | null>(null)
   const dispatch = useAppDispatch()
   const center = useAppSelector(selectCenter)
+  const currentDriver = useAppSelector(selectCurrentDriver)
+
+  const handleMoveToMarker = () => {
+    dispatch(setCurrentDriver(driver))
+  }
 
   useEffect(() => {
-    if (center === driver.location) {
-      setTimeout(() => {
-        map.panTo([driver.location[0], driver.location[1]], {
-          animate: true,
-          duration: 0.5,
-        })
-      }, 1000)
-      if (markerRef.current) {
-        markerRef.current.openPopup()
-      }
-    }
-  }, [center])
+   if (currentDriver && center !== currentDriver.location) {
+     dispatch(setCenter(currentDriver.location))
+     setTimeout(() => {
+       map.panTo([currentDriver.location[0], currentDriver.location[1]], {
+         animate: true,
+         duration: 0.5,
+       })
+     }, 1000)
+   }
+  }, [currentDriver])
 
   const deliveryStatus =
     driver.deliveryStatus === "Delivering"
@@ -47,7 +51,9 @@ const CustomMarker = (driver: Driver) => {
       ref={markerRef}
       position={[driver.location[0], driver.location[1]]}
       eventHandlers={{
-        click: () => dispatch(setCurrentDriver(driver)),
+        click: () => {
+          handleMoveToMarker()
+        },
         keydown: event => {
           if (event.originalEvent.key === "Enter") {
             dispatch(setCurrentDriver(driver))

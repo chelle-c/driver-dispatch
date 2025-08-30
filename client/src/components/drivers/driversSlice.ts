@@ -10,7 +10,11 @@ export type Driver = {
 
 export type Drivers = Driver[]
 
-export type DriverState = { drivers: Drivers; filteredDrivers: Drivers, currentDriver: Driver | null }
+export type DriverState = {
+  drivers: Drivers
+  filteredDrivers: Drivers
+  currentDriver: Driver | null
+}
 
 const initialState: DriverState = {
   drivers: [
@@ -47,18 +51,24 @@ export const driversSlice = createAppSlice({
         state.filteredDrivers = action.payload
       },
     ),
-    setCurrentDriver: create.reducer((state, action: PayloadAction<Driver>) => {
+    setCurrentDriver: create.reducer((state, action: PayloadAction<Driver | null>) => {
       state.currentDriver = action.payload
-    })
+    }),
   }),
   selectors: {
     selectDrivers: driverState => driverState.drivers,
     selectFilteredDrivers: driverState => driverState.filteredDrivers,
-    selectCurrentDriver: driverState => driverState.currentDriver
+    selectCurrentDriver: driverState => driverState.currentDriver,
   },
 })
 
-export const { addDriver, setDrivers, updateDriver, setFilteredDrivers, setCurrentDriver } =
-  driversSlice.actions
+export const {
+  addDriver,
+  setDrivers,
+  updateDriver,
+  setFilteredDrivers,
+  setCurrentDriver,
+} = driversSlice.actions
 
-export const { selectDrivers, selectFilteredDrivers, selectCurrentDriver } = driversSlice.selectors
+export const { selectDrivers, selectFilteredDrivers, selectCurrentDriver } =
+  driversSlice.selectors
