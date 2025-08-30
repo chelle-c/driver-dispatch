@@ -4,7 +4,9 @@ import { Provider } from "react-redux"
 import { App } from "./App"
 import { store } from "./app/store"
 import "@mantine/core/styles.css"
+import "@mantine/notifications/styles.css"
 import { MantineProvider } from "@mantine/core"
+import { Notifications } from "@mantine/notifications"
 import "./index.css"
 
 const container = document.getElementById("root")
@@ -16,6 +18,7 @@ if (container) {
     <MantineProvider>
       <StrictMode>
         <Provider store={store}>
+          <Notifications />
           <App />
         </Provider>
       </StrictMode>

@@ -3,6 +3,7 @@ import socketIOClient, { Socket } from "socket.io-client"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { setConnected, selectConnected } from "./socketSlice"
 import type { DriverState, Drivers, Driver } from "../drivers/driversSlice"
+import { notifications } from "@mantine/notifications"
 
 interface ClientToServerEvents {
   updateDrivers: (drivers: Drivers) => void
@@ -14,15 +15,25 @@ interface ServerToClientEvents {
   updateState: (state: DriverState) => void
 }
 
-export const useSocket = ({ endpoint }: { endpoint: string }) => {
+export const useSocket = ({
+  endpoint,
+  options,
+}: {
+  endpoint: string
+  options?: Object
+}) => {
   const dispatch = useAppDispatch()
   const connected = useAppSelector(selectConnected)
   const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
-    socketIOClient(endpoint)
+    socketIOClient(endpoint, options)
 
   useEffect(() => {
     const onConnect = () => {
-      console.log("Connected to server")
+      notifications.show({
+        title: "Connected to server",
+        message: "Successfully connected to the server.",
+        color: "green",
+      })
       dispatch(setConnected(true))
     }
 
@@ -33,7 +44,11 @@ export const useSocket = ({ endpoint }: { endpoint: string }) => {
     socket.on("connect", onConnect)
     socket.on("disconnect", onDisconnect)
     socket.on("connect_error", () => {
-      console.log("Error connecting to server")
+      notifications.show({
+        title: "Connection error",
+        message: "Failed to connect to the server.",
+        color: "red",
+      })
       onDisconnect()
     })
 

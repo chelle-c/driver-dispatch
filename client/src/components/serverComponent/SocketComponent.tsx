@@ -1,7 +1,6 @@
 import { useEffect } from "react"
-import { v4 as uuidv4 } from "uuid"
 import { useAppDispatch } from "../../app/hooks"
-import { Driver, DriverState, setDrivers } from "../drivers/driversSlice"
+import { DriverState, setDrivers } from "../drivers/driversSlice"
 import { useSocket } from "./useSocket"
 
 const SocketComponent = () => {
@@ -9,8 +8,9 @@ const SocketComponent = () => {
   const dispatch = useAppDispatch()
 
   // 🔌⚡️ get the connected socket client from our useSocket hook!
-  const { socket, connected } = useSocket({
+  const { socket } = useSocket({
     endpoint: `http://localhost:8000`,
+    options: {},
   })
 
   socket.on("updateState", (newState: DriverState) => {
@@ -21,27 +21,7 @@ const SocketComponent = () => {
     socket.emit("askForStateUpdate")
   }, [])
 
-  const addNewDriver = () => {
-    const newDriver: Driver = {
-      id: 5,
-      name: "New Driver",
-      location: [0, 0],
-      deliveryStatus: "Idle",
-    }
-    socket.emit("addNewDriver", newDriver)
-  }
-
-  if (!connected) {
-    return <div>Not connected</div>
-  }
-
-  return (
-    <div>
-      <div>
-        <button onClick={addNewDriver}>Add new driver</button>
-      </div>
-    </div>
-  )
+  return <></>
 }
 
 export default SocketComponent

@@ -1,11 +1,12 @@
 import cors from "cors";
 import express from "express";
 import { Server } from "socket.io";
+import data from "./driverData.json";
 
 type Driver = {
 	id: number;
 	name: string;
-	location: [number, number];
+	location: number[];
 	deliveryStatus: string;
 };
 
@@ -14,12 +15,11 @@ type Drivers = Driver[];
 type DriverState = {
 	drivers: Drivers;
 	filteredDrivers: Drivers;
-}
+};
 
 interface ClientToServerEvents {
 	updateDrivers: (drivers: Drivers) => void;
 	askForStateUpdate: () => void;
-	addNewDriver: (driver: Driver) => void;
 }
 
 interface ServerToClientEvents {
@@ -48,26 +48,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
 
 // State of drivers passed to the client
 const driverState: DriverState = {
-	drivers: [
-		{
-			id: 1,
-			name: "John Doe",
-			location: [40.7128, -74.006],
-			deliveryStatus: "Delivering",
-		},
-		{
-			id: 2,
-			name: "Jane Doe",
-			location: [30.7128, -84.006],
-			deliveryStatus: "Idle",
-		},
-		{
-			id: 3,
-			name: "Bob Smith",
-			location: [50.7128, -94.006],
-			deliveryStatus: "Paused",
-		},
-	],
+	drivers: data,
 	filteredDrivers: [],
 };
 
@@ -84,15 +65,10 @@ io.on("connection", (socket) => {
 	socket.on("updateDrivers", (drivers: Drivers) => {
 		console.log("Updating drivers...", drivers);
 		driverState.drivers = drivers;
-		io.emit("updateState", driverState);
+		setTimeout(() => {
+			socket.emit("updateState", driverState);
+		}, 2000);
 		console.log("Drivers updated.", driverState);
-	});
-
-	socket.on("addNewDriver", (driver: Driver) => {
-		console.log("Adding new driver...", driver);
-		driverState.drivers.push(driver);
-		io.emit("updateState", driverState);
-		console.log("Driver added.");
 	});
 
 	socket.on("disconnect", () => {

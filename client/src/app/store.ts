@@ -4,8 +4,6 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 import { mapSlice } from "../components/map/mapSlice"
 import { driversSlice } from "../components/drivers/driversSlice"
 import { socketSlice } from "../components/serverComponent/socketSlice"
-import { socketMiddleware } from "./middlewares"
-import { io } from "socket.io-client"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -20,7 +18,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     reducer: rootReducer,
     
     middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware().concat(socketMiddleware(io("/", { autoConnect: false })))
+      return getDefaultMiddleware()
     },
     preloadedState,
   })

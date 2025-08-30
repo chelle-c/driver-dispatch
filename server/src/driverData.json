@@ -1,0 +1,92 @@
+[
+	{
+		"id": 1,
+		"name": "John Doe",
+		"location": [47.4817, -52.7971],
+		"deliveryStatus": "Delivering"
+	},
+	{
+		"id": 2,
+		"name": "Jane Doe",
+		"location": [42.9994, -82.3089],
+		"deliveryStatus": "Idle"
+	},
+	{
+		"id": 3,
+		"name": "Bob Smith",
+		"location": [43.7417, -79.3733],
+		"deliveryStatus": "Paused"
+	},
+	{
+		"id": 4,
+		"name": "Alice Johnson",
+		"location": [49.25, -123.1],
+		"deliveryStatus": "Delivering"
+	},
+	{
+		"id": 5,
+		"name": "Charlie Brown",
+		"location": [44.6475, -63.5906],
+		"deliveryStatus": "Idle"
+	},
+	{
+		"id": 6,
+		"name": "Eve Green",
+		"location": [51.05, -114.0667],
+		"deliveryStatus": "Paused"
+	},
+	{
+		"id": 7,
+		"name": "Frank White",
+		"location": [44.4817, -73.7971],
+		"deliveryStatus": "Delivering"
+	},
+	{
+		"id": 8,
+		"name": "Grace Black",
+		"location": [46.2167, -60.5333],
+		"deliveryStatus": "Idle"
+	},
+	{
+		"id": 9,
+		"name": "Hank Brown",
+		"location": [48.15, -123.9],
+		"deliveryStatus": "Paused"
+	},
+	{
+		"id": 10,
+		"name": "Ivy Green",
+		"location": [39.25, -108.1],
+		"deliveryStatus": "Delivering"
+	},
+	{
+		"id": 11,
+		"name": "Jack White",
+		"location": [47.4817, -54.7971],
+		"deliveryStatus": "Idle"
+	},
+	{
+		"id": 12,
+		"name": "Kate Black",
+		"location": [45.216, -64.5333],
+		"deliveryStatus": "Paused"
+	},
+	{
+		"id": 13,
+		"name": "Lily Green",
+		"location": [50.25, -123.1],
+		"deliveryStatus": "Delivering"
+	},
+	{
+		"id": 14,
+		"name": "Mark White",
+		"location": [48.48, -53.7971],
+		"deliveryStatus": "Idle"
+	},
+	{
+		"id": 15,
+		"name": "Nancy Black",
+		"location": [43.2167, -70.5333],
+		"deliveryStatus": "Paused"
+	}
+]

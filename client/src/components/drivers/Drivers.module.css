@@ -4,24 +4,34 @@
   user-select: none;
 }
 
-.driverContainer {
-  background-color: white;
-  width: 100%;
-  cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid rgba(122, 122, 122, 0.3);
-  box-shadow: 0 2px 8px rgba(122, 122, 122, 0.2);
-}
-
 .driverCard {
   border: 1px solid lightgray;
   border-radius: 5px;
   padding: 1em;
   width: 100%;
   cursor: pointer;
+  outline: 1px solid rgba(112, 76, 182, 0.1);
+  box-shadow: 0px 0px 8px 8px rgba(112, 76, 182, 0.1);
+  transition: all 0.2s ease-in-out;
 }
 
-.filterSelectSection {
-  width: 3em !important;
-  margin: 1em;
+.driverCard:active, .driverCard:hover, .driverCard:focus {
+  background-color: rgba(112, 76, 182, 0.1);
+  border: 1px solid rgba(116, 192, 252, 0.5);
+  outline: 1px solid rgba(116, 192, 252, 0.7);
+  box-shadow: 0 0 8px rgba(116, 192, 252, 0.7) !important;
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+}
+
+.driverPanel {
+  position: absolute;
+  top: 100px;
+  left: 260px;
+  width: 300px;
+  z-index: 300;
+  background-color: white;
+  border-radius: 5px;
+  padding: 1em;
+  box-shadow: 0px 0px 8px 8px rgba(112, 76, 182, 0.1);
 }

@@ -1,19 +1,16 @@
 import { useEffect, useRef } from "react"
-import { useAppSelector } from "../../app/hooks"
+import { useAppSelector, useAppDispatch } from "../../app/hooks"
 import { selectCenter } from "./mapSlice"
-import { selectDrivers } from "../drivers/driversSlice"
-import type { Driver } from "../drivers/driversSlice"
 import {
-  MapContainer,
-  TileLayer,
-  Popup,
-  ZoomControl,
-  useMap,
-} from "react-leaflet"
+  selectFilteredDrivers,
+  setCurrentDriver,
+} from "../drivers/driversSlice"
+import type { Driver } from "../drivers/driversSlice"
+import { MapContainer, TileLayer, ZoomControl, useMap } from "react-leaflet"
 import { Marker } from "@adamscybot/react-leaflet-component-marker"
 import "leaflet/dist/leaflet.css"
 import { v4 as uuidv4 } from "uuid"
-import { Avatar, Badge, Text } from "@mantine/core"
+import { Avatar } from "@mantine/core"
 import styles from "./Map.module.css"
 
 const CustomMarker = (driver: Driver) => {
@@ -21,6 +18,7 @@ const CustomMarker = (driver: Driver) => {
   // TypeScript complains that the Marker component doesn't have the "openPopup" method, but it does, so let's silence the error
   //@ts-ignore
   const markerRef = useRef<Marker<any> | null>(null)
+  const dispatch = useAppDispatch()
   const center = useAppSelector(selectCenter)
 
   useEffect(() => {
@@ -48,6 +46,14 @@ const CustomMarker = (driver: Driver) => {
     <Marker
       ref={markerRef}
       position={[driver.location[0], driver.location[1]]}
+      eventHandlers={{
+        click: () => dispatch(setCurrentDriver(driver)),
+        keydown: event => {
+          if (event.originalEvent.key === "Enter") {
+            dispatch(setCurrentDriver(driver))
+          }
+        },
+      }}
       icon={
         <Avatar
           size="sm"
@@ -58,25 +64,13 @@ const CustomMarker = (driver: Driver) => {
           className={styles.markerIcon}
         />
       }
-    >
-      <Popup>
-        <Text size="lg" fw={700} pb="xs">
-          {driver.name}
-        </Text>
-        <Text size="sm" c="dimmed" pb="xs">
-          {driver.location[0]}°N, {driver.location[1]}°E
-        </Text>
-        <Badge fullWidth color={deliveryStatus} variant="filled">
-          {driver.deliveryStatus}
-        </Badge>
-      </Popup>
-    </Marker>
+    ></Marker>
   )
 }
 
 const Map = () => {
   const center = useAppSelector(selectCenter)
-  const drivers = useAppSelector(selectDrivers)
+  const drivers = useAppSelector(selectFilteredDrivers)
 
   const driverMarkers = () => {
     if (drivers.length === 0) {
