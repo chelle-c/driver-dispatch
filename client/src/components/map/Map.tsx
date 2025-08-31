@@ -93,7 +93,7 @@ const Map = () => {
   return (
     <MapContainer
       center={center}
-      zoom={10}
+      zoom={7}
       scrollWheelZoom={true}
       zoomControl={false}
     >

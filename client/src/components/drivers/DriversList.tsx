@@ -1,16 +1,8 @@
+import React, { useRef} from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import {
-  selectFilteredDrivers,
-  setCurrentDriver,
-} from "./driversSlice"
+import { selectFilteredDrivers, setCurrentDriver } from "./driversSlice"
 import type { Driver, Drivers } from "./driversSlice"
-import {
-  Avatar,
-  Flex,
-  Indicator,
-  Text,
-  UnstyledButton,
-} from "@mantine/core"
+import { Avatar, Flex, Indicator, Text, UnstyledButton } from "@mantine/core"
 import { v4 as uuidv4 } from "uuid"
 import styles from "./Drivers.module.css"
 
@@ -24,7 +16,6 @@ export const DriverDetails: React.FC<DriversProps> = ({
   driver,
   handleSelectedDriver,
 }) => {
-
   const indicatorColour =
     driver.deliveryStatus === "Delivering"
       ? "green"
@@ -79,16 +70,16 @@ export const DriverDetails: React.FC<DriversProps> = ({
   )
 }
 
-const Drivers = () => {
+const Drivers = React.memo(() => {
   const dispatch = useAppDispatch()
   const filteredDrivers = useAppSelector(selectFilteredDrivers)
+  const listRef = useRef<HTMLDivElement | null>(null)
 
   const handleSelectedDriver = (driver: Driver) => {
     dispatch(setCurrentDriver(driver))
   }
-
   return (
-    <div id="drivers-list">
+    <div id="drivers-list" className={styles.driversList} ref={listRef}>
       {filteredDrivers.length > 0 ? (
         <Flex
           direction="column"
@@ -118,6 +109,6 @@ const Drivers = () => {
       )}
     </div>
   )
-}
+})
 
 export default Drivers

@@ -1,11 +1,8 @@
-import {
-  Container,
-  Flex,
-  NativeSelect,
-} from "@mantine/core"
+import { Flex, NativeSelect, Text } from "@mantine/core"
 import { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { selectDrivers, setFilteredDrivers } from "./driversSlice"
+import { IconChevronDown } from "@tabler/icons-react"
 import styles from "./Drivers.module.css"
 
 const DriverFilter = () => {
@@ -32,23 +29,30 @@ const DriverFilter = () => {
   }
 
   return (
-    <Container fluid h={80}>
-      <Flex gap="md" direction="row" align="center" justify="flex-start">
-        <h2>Live Driver Tracking</h2>
-        <NativeSelect
-          className={styles.filterSelect}
-          label="Filter by delivery status"
-          data={[
-            { value: "All", label: "All" },
-            { value: "Delivering", label: "Delivering" },
-            { value: "Idle", label: "Idle" },
-            { value: "Paused", label: "Paused" },
-          ]}
-          defaultValue="All"
-          onChange={event => handleFilter(event)}
-        />
-      </Flex>
-    </Container>
+    <Flex
+      p="md"
+      gap={{ base: "sm", sm: "lg" }}
+      direction={{ base: "column", sm: "row" }}
+      align="center"
+      justify={{ sm: "center", md: "flex-start" }}
+    >
+      <Text size="xl" fw={700}>
+        Live Driver Tracking
+      </Text>
+      <NativeSelect
+        className={styles.filterSelect}
+        rightSection={<IconChevronDown size={16} />}
+        label="Filter by delivery status"
+        data={[
+          { value: "All", label: "All" },
+          { value: "Delivering", label: "Delivering" },
+          { value: "Idle", label: "Idle" },
+          { value: "Paused", label: "Paused" },
+        ]}
+        defaultValue="All"
+        onChange={event => handleFilter(event)}
+      />
+    </Flex>
   )
 }
 
