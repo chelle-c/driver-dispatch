@@ -1,18 +1,12 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-
-export type Driver = {
-  id: number
-  name: string
-  location: [number, number]
-  deliveryStatus: string
-}
-
-export type Drivers = Driver[]
+import { socketActions } from "../../utils/socketSlice"
+import type { Driver, Drivers } from "../../types/types"
 
 export type DriverState = {
   drivers: Drivers
   filteredDrivers: Drivers
+  filteredState: string
   currentDriver: Driver | null
 }
 
@@ -26,6 +20,7 @@ const initialState: DriverState = {
     },
   ],
   filteredDrivers: [],
+  filteredState: "All",
   currentDriver: null,
 }
 
@@ -33,42 +28,60 @@ export const driversSlice = createAppSlice({
   name: "drivers",
   initialState,
   reducers: create => ({
-    addDriver: create.reducer((state, action: PayloadAction<Driver>) => {
-      state.drivers.push(action.payload)
-    }),
     setDrivers: create.reducer((state, action: PayloadAction<Drivers>) => {
       console.log("Drivers received from server")
       state.drivers = action.payload
-    }),
-    updateDriver: create.reducer((state, action: PayloadAction<Driver>) => {
-      const driverIndex = state.drivers.findIndex(
-        driver => driver.id === action.payload.id,
-      )
-      state.drivers[driverIndex] = action.payload
     }),
     setFilteredDrivers: create.reducer(
       (state, action: PayloadAction<Drivers>) => {
         state.filteredDrivers = action.payload
       },
     ),
-    setCurrentDriver: create.reducer((state, action: PayloadAction<Driver | null>) => {
-      state.currentDriver = action.payload
+    setFilteredState: create.reducer((state, action: PayloadAction<string>) => {
+      state.filteredState = action.payload
     }),
+    setCurrentDriver: create.reducer(
+      (state, action: PayloadAction<Driver | null>) => {
+        state.currentDriver = action.payload
+      },
+    ),
+    updateDriver: create.reducer((state, action: PayloadAction<Driver>) => {
+      // const driverIndex = state.drivers.findIndex(
+      //   driver => driver.id === action.payload.id,
+      // )
+    }),
+    updateServerDrivers: create.reducer(
+      (state, action: PayloadAction<Drivers>) => {},
+    ),
   }),
   selectors: {
     selectDrivers: driverState => driverState.drivers,
     selectFilteredDrivers: driverState => driverState.filteredDrivers,
+    selectFilteredState: driverState => driverState.filteredState,
     selectCurrentDriver: driverState => driverState.currentDriver,
+  },
+  extraReducers: builder => {
+    builder.addCase(
+      socketActions.dataReceived,
+      (state, action: PayloadAction<Drivers>) => {
+        state.drivers = action.payload
+      },
+    )
   },
 })
 
 export const {
-  addDriver,
   setDrivers,
   updateDriver,
   setFilteredDrivers,
+  setFilteredState,
   setCurrentDriver,
+  updateServerDrivers
 } = driversSlice.actions
 
-export const { selectDrivers, selectFilteredDrivers, selectCurrentDriver } =
-  driversSlice.selectors
+export const {
+  selectDrivers,
+  selectFilteredDrivers,
+  selectFilteredState,
+  selectCurrentDriver,
+} = driversSlice.selectors

@@ -3,7 +3,8 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 import { mapSlice } from "../components/map/mapSlice"
 import { driversSlice } from "../components/drivers/driversSlice"
-import { socketSlice } from "../components/serverComponent/socketSlice"
+import socketSlice from "../utils/socketSlice"
+import socketMiddleware from "./socketMiddleware"
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -16,9 +17,9 @@ export type RootState = ReturnType<typeof rootReducer>
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({
     reducer: rootReducer,
-    
+
     middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware()
+      return getDefaultMiddleware().concat(socketMiddleware)
     },
     preloadedState,
   })

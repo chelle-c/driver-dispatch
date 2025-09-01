@@ -2,7 +2,7 @@
   padding: 1em;
   width: 100%;
   user-select: none;
-  height: 100%
+  height: 100%;
 }
 
 .driverCard {
@@ -16,7 +16,9 @@
   transition: all 0.2s ease-in-out;
 }
 
-.driverCard:active, .driverCard:hover, .driverCard:focus {
+.driverCard:active,
+.driverCard:hover,
+.driverCard:focus {
   background-color: rgba(112, 76, 182, 0.1);
   border: 1px solid rgba(116, 192, 252, 0.5);
   outline: 1px solid rgba(116, 192, 252, 0.7);
@@ -27,10 +29,11 @@
 
 .driverPanel {
   position: absolute;
-  top: 100px;
-  left: 260px;
-  width: 300px;
-  z-index: 300;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 1000;
+  padding-top: 1em;
   background-color: white;
   border-radius: 5px;
   padding: 1em;
@@ -40,6 +43,18 @@
   justify-content: space-between;
   outline: 1px solid rgba(112, 76, 182, 0.1);
   box-shadow: 0px 0px 8px 8px rgba(112, 76, 182, 0.1);
+}
+
+@media screen and (min-width: 768px) {
+  .driverPanel {
+    position: absolute;
+    top: 8px;
+    left: 316px;
+    min-width: 300px;
+    max-width: fit-content;
+    z-index: 1000;
+    padding-top: 1em;
+  }
 }
 
 .driverPanelCloseButton {

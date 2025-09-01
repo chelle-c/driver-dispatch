@@ -18,6 +18,7 @@ type DriverState = {
 };
 
 interface ClientToServerEvents {
+	updateDriver: (driver: Driver) => void;
 	updateDrivers: (drivers: Drivers) => void;
 	askForStateUpdate: () => void;
 }
@@ -55,10 +56,9 @@ const driverState: DriverState = {
 io.on("connection", (socket) => {
 	console.log("client connected");
 
-	// the client will send an 'askForStateUpdate' request on mount
-	// to get the initial state of the poll
+	socket.emit("updateState", driverState);
+
 	socket.on("askForStateUpdate", () => {
-		console.log("client asked For State Update");
 		socket.emit("updateState", driverState);
 	});
 
@@ -70,6 +70,16 @@ io.on("connection", (socket) => {
 		}, 2000);
 		console.log("Drivers updated.", driverState);
 	});
+
+	socket.on("updateDriver", (receivedDriver: Driver) => {
+		console.log("Updating driver...");
+		const driverIndex = driverState.drivers.findIndex((driver) => driver.id === receivedDriver.id);
+		driverState.drivers[driverIndex] = receivedDriver;
+		setTimeout(() => {
+			socket.emit("updateState", driverState);
+		}, 2000);
+		console.log("Driver updated.", driverState.drivers[driverIndex]);
+	})
 
 	socket.on("disconnect", () => {
 		console.log("client disconnected");

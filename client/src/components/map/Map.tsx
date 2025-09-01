@@ -6,7 +6,7 @@ import {
   setCurrentDriver,
   selectCurrentDriver,
 } from "../drivers/driversSlice"
-import type { Driver } from "../drivers/driversSlice"
+import type { Driver } from "../../types/types"
 import { MapContainer, TileLayer, ZoomControl, useMap } from "react-leaflet"
 import { Marker } from "@adamscybot/react-leaflet-component-marker"
 import "leaflet/dist/leaflet.css"

@@ -11,18 +11,13 @@
 
 .leaflet-container {
   position: relative;
-  height: 90vh;
   width: 100%;
-  height: 100%;
+  height: 88vh;
   z-index: 0;
 }
 
 .leaflet-popup-content p {
   margin: 0 !important;
-}
-
-.mantine-AppShell-main {
-  height: 100vh;
 }
 
 .mantine-NativeSelect-root {
@@ -34,4 +29,38 @@
   padding: 8px;
   border-radius: 4px;
   background-color: rgba(112, 76, 182, 0.1);
+  width: fit-content;
+}
+
+.mantine-NativeSelect-root
+  > .mantine-NativeSelect-wrapper
+  > .mantine-NativeSelect-label {
+  width: fit-content;
+  min-width: 160px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2c2c2c;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mantine-NativeSelect-root
+  > .mantine-NativeSelect-wrapper
+  > .mantine-NativeSelect-input {
+  width: fit-content;
+  min-width: 160px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #2c2c2c;
+}
+
+@media screen and (max-width: 24em) {
+  .mantine-NativeSelect-root {
+    width: 100%;
+    flex-direction: column;
+  }
 }

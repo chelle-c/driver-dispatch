@@ -1,7 +1,7 @@
-import React, { useRef} from "react"
+import React from "react"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
 import { selectFilteredDrivers, setCurrentDriver } from "./driversSlice"
-import type { Driver, Drivers } from "./driversSlice"
+import type { Driver } from "../../types/types"
 import { Avatar, Flex, Indicator, Text, UnstyledButton } from "@mantine/core"
 import { v4 as uuidv4 } from "uuid"
 import styles from "./Drivers.module.css"
@@ -11,7 +11,6 @@ interface DriversProps {
   handleSelectedDriver: (driver: Driver) => void
 }
 
-// Component to display drivers in the dispatch panel
 export const DriverDetails: React.FC<DriversProps> = ({
   driver,
   handleSelectedDriver,
@@ -70,16 +69,15 @@ export const DriverDetails: React.FC<DriversProps> = ({
   )
 }
 
-const Drivers = React.memo(() => {
+const DriversList = React.memo(() => {
   const dispatch = useAppDispatch()
   const filteredDrivers = useAppSelector(selectFilteredDrivers)
-  const listRef = useRef<HTMLDivElement | null>(null)
 
   const handleSelectedDriver = (driver: Driver) => {
     dispatch(setCurrentDriver(driver))
   }
   return (
-    <div id="drivers-list" className={styles.driversList} ref={listRef}>
+    <div id="drivers-list" className={styles.driversList}>
       {filteredDrivers.length > 0 ? (
         <Flex
           direction="column"
@@ -111,4 +109,4 @@ const Drivers = React.memo(() => {
   )
 })
 
-export default Drivers
+export default DriversList
