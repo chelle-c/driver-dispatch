@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import type { Drivers } from "../types/types"
+import type { Drivers, SocketState } from "../../types/types"
 
-interface SocketState {
-  isConnected: boolean
-}
-
+// Define the initial state
 const initialState: SocketState = {
   isConnected: false,
 }
@@ -13,9 +10,9 @@ const socketSlice = createSlice({
   name: "socket",
   initialState,
   reducers: {
-    connectionStart: state => {},
-    connectionClose: state => {},
-    sendData: (state, action: PayloadAction<Drivers>) => {},
+    // Actions to open and close the socket connection
+    connectionStart: _state => {},
+    connectionClose: _state => {},
 
     // Reducers to actually update the state
     connectionEstablished: state => {
@@ -24,9 +21,8 @@ const socketSlice = createSlice({
     connectionClosed: state => {
       state.isConnected = false
     },
-    dataReceived: (state, action: PayloadAction<Drivers>) => {
-      // state.drivers = action.payload
-    },
+    // Action to update the list of drivers
+    dataReceived: (_state, _action: PayloadAction<Drivers>) => {},
   },
 })
 

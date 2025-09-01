@@ -6,11 +6,6 @@
 }
 
 .driverCard {
-  border: 1px solid lightgray;
-  border-radius: 5px;
-  padding: 1em;
-  width: 100%;
-  cursor: pointer;
   outline: 1px solid rgba(112, 76, 182, 0.1);
   box-shadow: 0px 0px 8px 8px rgba(112, 76, 182, 0.1);
   transition: all 0.2s ease-in-out;
@@ -45,7 +40,7 @@
   box-shadow: 0px 0px 8px 8px rgba(112, 76, 182, 0.1);
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 49em)  {
   .driverPanel {
     position: absolute;
     top: 8px;

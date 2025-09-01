@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { socketActions } from "../../utils/socketSlice"
+import { socketActions } from "../socket/socketSlice"
 import type { Driver, Drivers } from "../../types/types"
 
 export type DriverState = {
@@ -8,50 +8,86 @@ export type DriverState = {
   filteredDrivers: Drivers
   filteredState: string
   currentDriver: Driver | null
+  driverToRollBack: Driver | null
 }
 
+// Define the initial state
 const initialState: DriverState = {
   drivers: [
     {
       id: 1,
       name: "Example Driver",
-      location: [0, 0],
-      deliveryStatus: "Paused",
+      avatar: "",
+      latitude: 0,
+      longitude: 0,
+      status: "Paused",
     },
   ],
   filteredDrivers: [],
   filteredState: "All",
   currentDriver: null,
+  driverToRollBack: null,
 }
 
 export const driversSlice = createAppSlice({
   name: "drivers",
   initialState,
   reducers: create => ({
+    // Set the list of drivers from the server
     setDrivers: create.reducer((state, action: PayloadAction<Drivers>) => {
-      console.log("Drivers received from server")
       state.drivers = action.payload
     }),
+    // Set the list of filtered drivers
     setFilteredDrivers: create.reducer(
       (state, action: PayloadAction<Drivers>) => {
         state.filteredDrivers = action.payload
       },
     ),
+    // Set the filtered state
     setFilteredState: create.reducer((state, action: PayloadAction<string>) => {
       state.filteredState = action.payload
     }),
+    // Set the currently selected driver
     setCurrentDriver: create.reducer(
       (state, action: PayloadAction<Driver | null>) => {
         state.currentDriver = action.payload
       },
     ),
-    updateDriver: create.reducer((state, action: PayloadAction<Driver>) => {
-      // const driverIndex = state.drivers.findIndex(
-      //   driver => driver.id === action.payload.id,
-      // )
+    // Optimistic update
+    updateDriverRequest: create.reducer(
+      (state, action: PayloadAction<Driver>) => {
+        const driverToUpdate = action.payload
+        const driverIndex = state.drivers.findIndex(
+          driver => driver.id === driverToUpdate.id,
+        )
+        if (driverIndex !== -1) {
+          // Store the original user state before updating
+          state.driverToRollBack = state.drivers[driverIndex]
+          // Apply the new state immediately
+          state.drivers[driverIndex] = driverToUpdate
+        }
+      },
+    ),
+    // Successful data update (cleanup optimistic update)
+    updateDriverSuccess: create.reducer(state => {
+      state.driverToRollBack = null
     }),
-    updateServerDrivers: create.reducer(
-      (state, action: PayloadAction<Drivers>) => {},
+    // Failed data update (rollback to original state)
+    updateDriverFailure: create.reducer(
+      (state, action: PayloadAction<Driver>) => {
+        // Payload is the original driver
+        const originalDriver = action.payload
+        const driverIndex = state.drivers.findIndex(
+          driver => driver.id === originalDriver.id,
+        )
+
+        if (driverIndex !== -1) {
+          // Revert the driver's state
+          state.drivers[driverIndex] = originalDriver
+        }
+        // Clean up rollback state
+        state.driverToRollBack = null
+      },
     ),
   }),
   selectors: {
@@ -72,11 +108,12 @@ export const driversSlice = createAppSlice({
 
 export const {
   setDrivers,
-  updateDriver,
   setFilteredDrivers,
   setFilteredState,
   setCurrentDriver,
-  updateServerDrivers
+  updateDriverRequest,
+  updateDriverSuccess,
+  updateDriverFailure,
 } = driversSlice.actions
 
 export const {

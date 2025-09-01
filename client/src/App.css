@@ -16,6 +16,12 @@
   z-index: 0;
 }
 
+@media screen and (max-width: 36em) {
+  .leaflet-container {
+    height: 80vh;
+  }
+}
+
 .leaflet-popup-content p {
   margin: 0 !important;
 }

@@ -1,9 +1,9 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
-import { mapSlice } from "../components/map/mapSlice"
-import { driversSlice } from "../components/drivers/driversSlice"
-import socketSlice from "../utils/socketSlice"
+import { mapSlice } from "../features/map/mapSlice"
+import { driversSlice } from "../features/drivers/driversSlice"
+import socketSlice from "../features/socket/socketSlice"
 import socketMiddleware from "./socketMiddleware"
 
 // `combineSlices` automatically combines the reducers using

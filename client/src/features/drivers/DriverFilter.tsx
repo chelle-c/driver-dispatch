@@ -10,33 +10,36 @@ import {
 import { IconChevronDown } from "@tabler/icons-react"
 import styles from "./Drivers.module.css"
 
+/**
+ * A component that renders a dropdown for filtering drivers by status.
+ * 
+ * On mount, it updates the list of drivers based on the current filter.
+ * When the filter changes, it updates the list of drivers again.
+ * 
+ * @returns A Mantine Flex component with a Text component and a NativeSelect component.
+ */
 const DriverFilter = () => {
   const dispatch = useAppDispatch()
   const drivers = useAppSelector(selectDrivers)
   const filter = useAppSelector(selectFilteredState)
 
+  // Update the list of drivers when the filter changes
   useEffect(() => {
     dispatch(setFilteredDrivers(driversFilter(filter)))
   }, [drivers, filter])
 
-  useEffect(() => {
-    const filterSelect = document.querySelector("select")
-    if (filterSelect) {
-      filterSelect.value = filter
-      filterSelect.dispatchEvent(new Event("change"))
-    }
-  }, [filter])
-
+  // Filter the list of drivers based on the current filter
   const driversFilter = (filterValue: string) => {
     if (filterValue === "All") {
       return drivers
     }
 
     return drivers.filter(driver =>
-      driver.deliveryStatus.toLowerCase().includes(filterValue.toLowerCase()),
+      driver.status.toLowerCase().includes(filterValue.toLowerCase()),
     )
   }
 
+  // Handle the filter change
   const handleFilter = (event: any) => {
     const filter = event.target.value
     dispatch(setFilteredState(filter))
@@ -47,7 +50,7 @@ const DriverFilter = () => {
     <Flex
       direction={{ base: "column", sm: "row" }}
       gap={{ base: "xs", md: 72 }}
-      justify={{ base: "flex-start", sm: "space-evenly", md: "flex-start" }}
+      justify={{ base: "flex-start", sm: "space-evenly", md: "space-between" }}
       wrap="wrap"
       align="center"
       style={{ width: "100%" }}

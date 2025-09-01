@@ -2,91 +2,121 @@
 	{
 		"id": 1,
 		"name": "John Doe",
-		"location": [47.4817, -52.7971],
-		"deliveryStatus": "Delivering"
+		"avatar": "https://i.pravatar.cc/300?img=70",
+		"latitude": 47.4817,
+		"longitude": -52.7971,
+		"status": "Delivering"
 	},
 	{
 		"id": 2,
 		"name": "Jane Doe",
-		"location": [42.9994, -82.3089],
-		"deliveryStatus": "Idle"
+		"avatar": "https://i.pravatar.cc/300?img=32",
+		"latitude": 45.9994,
+		"longitude": -72.7971,
+		"status": "Idle"
 	},
 	{
 		"id": 3,
 		"name": "Bob Smith",
-		"location": [43.7417, -79.3733],
-		"deliveryStatus": "Paused"
+		"avatar": "https://i.pravatar.cc/300?img=17",
+		"latitude": 44.2417,
+		"longitude": -79.3733,
+		"status": "Paused"
 	},
 	{
 		"id": 4,
 		"name": "Alice Johnson",
-		"location": [49.25, -123.1],
-		"deliveryStatus": "Delivering"
+		"avatar": "https://i.pravatar.cc/300?img=48",
+		"latitude": 49.25,
+		"longitude": -123.1,
+		"status": "Delivering"
 	},
 	{
 		"id": 5,
 		"name": "Charlie Brown",
-		"location": [44.6475, -63.5906],
-		"deliveryStatus": "Idle"
+		"avatar": "https://i.pravatar.cc/300?img=14",
+		"latitude": 44.6475,
+		"longitude": -63.5906,
+		"status": "Idle"
 	},
 	{
 		"id": 6,
 		"name": "Eve Green",
-		"location": [51.05, -114.0667],
-		"deliveryStatus": "Paused"
+		"avatar": "https://i.pravatar.cc/300?img=16",
+		"latitude": 51.05,
+		"longitude": -114.0667,
+		"status": "Paused"
 	},
 	{
 		"id": 7,
 		"name": "Frank White",
-		"location": [44.4817, -73.7971],
-		"deliveryStatus": "Delivering"
+		"avatar": "https://i.pravatar.cc/300?img=13",
+		"latitude": 44.4817,
+		"longitude": -73.7971,
+		"status": "Delivering"
 	},
 	{
 		"id": 8,
 		"name": "Grace Black",
-		"location": [46.2167, -60.5333],
-		"deliveryStatus": "Idle"
+		"avatar": "https://i.pravatar.cc/300?img=44",
+		"latitude":46.2167,
+		"longitude": -60.5333,
+		"status": "Idle"
 	},
 	{
 		"id": 9,
 		"name": "Hank Brown",
-		"location": [48.15, -123.9],
-		"deliveryStatus": "Paused"
+		"avatar": "https://i.pravatar.cc/300?img=12",
+		"latitude": 48.15,
+		"longitude": -123.9,
+		"status": "Paused"
 	},
 	{
 		"id": 10,
 		"name": "Ivy Green",
-		"location": [39.25, -108.1],
-		"deliveryStatus": "Delivering"
+		"avatar": "https://i.pravatar.cc/300?img=27",
+		"latitude": 39.25,
+		"longitude": -108.1,
+		"status": "Delivering"
 	},
 	{
 		"id": 11,
 		"name": "Jack White",
-		"location": [47.4817, -54.7971],
-		"deliveryStatus": "Idle"
+		"avatar": "https://i.pravatar.cc/300?img=53",
+		"latitude": 47.4817,
+		"longitude": -54.7971,
+		"status": "Idle"
 	},
 	{
 		"id": 12,
 		"name": "Kate Black",
-		"location": [45.216, -64.5333],
-		"deliveryStatus": "Paused"
+		"avatar": "https://i.pravatar.cc/300?img=23",
+		"latitude": 45.216,
+		"longitude": -64.5333,
+		"status": "Paused"
 	},
 	{
 		"id": 13,
 		"name": "Lily Green",
-		"location": [50.25, -123.1],
-		"deliveryStatus": "Delivering"
+		"avatar": "https://i.pravatar.cc/300?img=26",
+		"latitude": 50.25,
+		"longitude": -123.1,
+		"status": "Delivering"
 	},
 	{
 		"id": 14,
 		"name": "Mark White",
-		"location": [48.48, -53.7971],
-		"deliveryStatus": "Idle"
+		"avatar": "https://i.pravatar.cc/300?img=51",
+		"latitude": 48,
+		"longitude": -53.7971,
+		"status": "Idle"
 	},
 	{
 		"id": 15,
 		"name": "Nancy Black",
-		"location": [43.2167, -70.5333],
-		"deliveryStatus": "Paused"
+		"avatar": "https://i.pravatar.cc/300?img=49",
+		"latitude": 43.2167,
+		"longitude": -70.5333,
+		"status": "Paused"
 	}
 ]

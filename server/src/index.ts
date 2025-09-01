@@ -6,8 +6,10 @@ import data from "./driverData.json";
 type Driver = {
 	id: number;
 	name: string;
-	location: number[];
-	deliveryStatus: string;
+	avatar: string;
+	latitude: number;
+	longitude: number;
+	status: string;
 };
 
 type Drivers = Driver[];
@@ -18,8 +20,10 @@ type DriverState = {
 };
 
 interface ClientToServerEvents {
-	updateDriver: (driver: Driver) => void;
-	updateDrivers: (drivers: Drivers) => void;
+	updateDriver: (
+		driver: Driver,
+		callback: (response: { success: boolean; error?: string }) => void
+	) => void;
 	askForStateUpdate: () => void;
 }
 
@@ -62,24 +66,40 @@ io.on("connection", (socket) => {
 		socket.emit("updateState", driverState);
 	});
 
-	socket.on("updateDrivers", (drivers: Drivers) => {
-		console.log("Updating drivers...", drivers);
-		driverState.drivers = drivers;
-		setTimeout(() => {
-			socket.emit("updateState", driverState);
-		}, 2000);
-		console.log("Drivers updated.", driverState);
-	});
+	socket.on("updateDriver", async (receivedDriver: Driver, callback) => {
+		try {
+			const driverIndex = driverState.drivers.findIndex(
+				(driver) => driver.id === receivedDriver.id
+			);
+			driverState.drivers[driverIndex] = receivedDriver;
 
-	socket.on("updateDriver", (receivedDriver: Driver) => {
-		console.log("Updating driver...");
-		const driverIndex = driverState.drivers.findIndex((driver) => driver.id === receivedDriver.id);
-		driverState.drivers[driverIndex] = receivedDriver;
-		setTimeout(() => {
-			socket.emit("updateState", driverState);
-		}, 2000);
-		console.log("Driver updated.", driverState.drivers[driverIndex]);
-	})
+			// Acknowledge the update
+			callback({ success: true });
+
+			// Broadcast the change to the client
+			socket.broadcast.emit("updateState", driverState);
+
+			// Log the updated driver
+			console.log(`Driver ${receivedDriver.name} updated with delivery status: ${receivedDriver.status}.`);
+		} catch (error: unknown) {
+			if (error instanceof Error) {
+				console.error(`Error updating driver ${receivedDriver.name}:`, error);
+
+				callback({
+					success: false,
+					error:
+						error.message || `Error updating driver ${receivedDriver.name} on server.`,
+				});
+			} else {
+				console.error(`Unknown error updating driver ${receivedDriver.name}:`, error);
+
+				callback({
+					success: false,
+					error: `Unknown error occurred.`,
+				});
+			}
+		}
+	});
 
 	socket.on("disconnect", () => {
 		console.log("client disconnected");
