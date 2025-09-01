@@ -70,6 +70,6 @@ Lastly, to quickly set up a functional and aesthetic UI, I decided to add a UI c
 
 - There is no unit testing or component testing implemented in this project.
 
-- A test suite is crucial for an application's scalability. Testing each event, communication between the client and server, and the component's rendered data would help find points of failure in the infrastucture of both the client and the server.
+- A test suite is crucial for an application's scalability. Testing each event change, communication between the client and server, and the components' rendered data would help find points of failure in the infrastucture of both the client and the server.
 
 ### Thanks for checking out my project!
