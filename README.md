@@ -38,7 +38,7 @@ I used **Leaflet** and **React Leaflet** for the map. **Leaflet** is an open-sou
 
 Lastly, to quickly set up a functional and aesthetic UI, I decided to add a UI components library. I checked out a few options, and eventually opted for **Mantine**. The components in the library look stylish, and their implementation seemed fairly simple.
 
-## Known limitations or areas that could be further optimized
+## Known limitations/Areas that could be further optimized
 
 #### Data Changes are Not Saved
 
