@@ -36,7 +36,7 @@ For easy WebSocket use, I used **Socket.io**. The server portion uses **Socket.i
 
 I used **Leaflet** and **React Leaflet** for the map. **Leaflet** is an open-source JavaScript library, which makes it easy to set up and use.
 
-Lastly, to quickly set up a functional and aesthetic UI, I decided to add a UI components library. I checked out a few options, and eventually opted for **Mantine**. The components in the library look stylish, and their implementation seemed fairly simple.
+Lastly, to quickly set up a functional and aesthetic UI, I decided to add a UI components library. I checked out a few options, and eventually opted for **Mantine**. The components in the library look stylish, and their implementation seemed fairly simple. If I had the time, I would have created something more custom using either plain CSS with SASS, or TailwindCSS.
 
 ## Known limitations/Areas that could be further optimized
 
@@ -58,7 +58,7 @@ Lastly, to quickly set up a functional and aesthetic UI, I decided to add a UI c
 
 #### Issues with UI Components and Icons libraries
 
-- Components libraries are usually a good way to get an app up and running, but if I had more time, I would have created something more custom (using either plain CSS with SASS, or TailwindCSS).
+- Components libraries are usually a good way to get an app up and running, but they can be a struggle to work with (especially if library has a lot of added functionality).
 
 - Mantine is a UI library that I was not entirely familiar with, so there were some hurdles I encountered when I started trying to tie everything together. Some CSS styles were added inline or through custom classes.
 
