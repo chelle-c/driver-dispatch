@@ -1,7 +1,15 @@
+import { useSelector } from "react-redux"
 import { Middleware } from "@reduxjs/toolkit"
 import { io, Socket } from "socket.io-client"
-import { socketActions } from "../features/socket/socketSlice"
 import {
+  connectionStart,
+  connectionClose,
+  connectionEstablished,
+  connectionClosed,
+  dataReceived,
+} from "../features/socket/socketSlice"
+import {
+  selectDriverToRollBack,
   updateDriverRequest,
   updateDriverSuccess,
   updateDriverFailure,
@@ -13,18 +21,11 @@ const socketMiddleware: Middleware = store => {
   let socket: Socket | null = null
 
   return next => (action: any) => {
-    const { dispatch, getState } = store
-    const {
-      connectionStart,
-      connectionClose,
-      connectionEstablished,
-      connectionClosed,
-      dataReceived,
-    } = socketActions
+    const { dispatch } = store
 
     // Function to roll back a failed driver update
     const rollbackDriver = () => {
-      const { driverToRollBack } = getState().drivers
+      const driverToRollBack = useSelector(selectDriverToRollBack)
 
       if (driverToRollBack) {
         dispatch(updateDriverFailure(driverToRollBack))

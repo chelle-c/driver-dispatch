@@ -26,5 +26,11 @@ const socketSlice = createSlice({
   },
 })
 
-export const socketActions = socketSlice.actions
+export const {
+  connectionStart,
+  connectionClose,
+  connectionEstablished,
+  connectionClosed,
+  dataReceived,
+} = socketSlice.actions
 export default socketSlice

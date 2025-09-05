@@ -58,7 +58,7 @@ const driverState: DriverState = {
 };
 
 io.on("connection", (socket) => {
-	console.log("client connected");
+	console.log("Client connected.");
 
 	socket.emit("updateState", driverState);
 
@@ -102,10 +102,10 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on("disconnect", () => {
-		console.log("client disconnected");
+		console.log("Client disconnected.");
 	});
 });
 
 server.listen(8000, () => {
-	console.log("listening on *:8000");
+	console.log("Listening on *:8000.");
 });

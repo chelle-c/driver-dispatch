@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 import { createAppSlice } from "../../app/createAppSlice"
-import { socketActions } from "../socket/socketSlice"
+import { dataReceived } from "../socket/socketSlice"
 import type { Driver, Drivers } from "../../types/types"
 
 export type DriverState = {
@@ -95,14 +95,12 @@ export const driversSlice = createAppSlice({
     selectFilteredDrivers: driverState => driverState.filteredDrivers,
     selectFilteredState: driverState => driverState.filteredState,
     selectCurrentDriver: driverState => driverState.currentDriver,
+    selectDriverToRollBack: driverState => driverState.driverToRollBack,
   },
   extraReducers: builder => {
-    builder.addCase(
-      socketActions.dataReceived,
-      (state, action: PayloadAction<Drivers>) => {
-        state.drivers = action.payload
-      },
-    )
+    builder.addCase(dataReceived, (state, action: PayloadAction<Drivers>) => {
+      state.drivers = action.payload
+    })
   },
 })
 
@@ -121,4 +119,5 @@ export const {
   selectFilteredDrivers,
   selectFilteredState,
   selectCurrentDriver,
+  selectDriverToRollBack,
 } = driversSlice.selectors
